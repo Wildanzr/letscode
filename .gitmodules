@@ -1,0 +1,6 @@
+[submodule "be"]
+	path = be
+	url = git@github.com:Wildanzr/letscode-be.git
+[submodule "fe"]
+	path = fe
+	url = git@github.com:Wildanzr/letscode2gether.git
