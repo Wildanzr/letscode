@@ -28,7 +28,7 @@ Once Docker is installed, follow these steps to install LetsCode:
 3. Run the application with Docker Compose:
     - In the terminal or command prompt, run the command `docker-compose up -d`. This will start the containers and run the application in detach mode.
     - You can see the log of containers by executing the command `docker logs letscode-nameofimage`
-```
+
 ## 🚀 Features
 
 - Light/dark mode toggle

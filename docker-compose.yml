@@ -42,7 +42,7 @@ services:
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
       SECRET: 4cf0628c7ce9c79fd4e38fe884a7f6c995440ee68394572ba342ba9f3368b07bcb0b45fd7ba6e9dcf4de8a62c5fbfcfa15f38e7bfbd0d6eeeae87206393164ca
-      CLIENT_HOST: http://localhost:5173
+      CLIENT_HOST: http://letscode.wildanzr.my.id
       BUCKET_NAME: letscode-cloud
       PROJECT_ID: letscode-372615
 
@@ -79,8 +79,8 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-      JUDGE_API_URL: https://judge1.wildanzr.my.id/submissions
-      JUDGE_API_HOST: judge1.wildanzr.my.id
+      JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
+      JUDGE_API_HOST: judge.wildanzr.my.id
 
   mailer:
     depends_on:
@@ -102,7 +102,7 @@ services:
       OAUTH_CLIENT_ID: 212782666206-b921kncmd6vjbfusud08q00d4ovi4pkm.apps.googleusercontent.com
       OAUTH_CODE: 4/0AdQt8qg7X9Qtos1jDTyuMwoWjFyzrohHK3tPQMqF8dNKFDWGWxSdHRPcNe9nBDft89tRNg
 
-  submission:
+  submission1:
     depends_on:
       - mongodb
       - rabbitmq
@@ -110,15 +110,51 @@ services:
       context: ./be/submission
       dockerfile: Dockerfile
     image: letscode-submission:skripsi
-    container_name: letscode-submission
+    container_name: letscode-submission1
     environment:
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
       DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
-      JUDGE_API_URL: https://judge1.wildanzr.my.id/submissions
-      JUDGE_API_HOST: judge1.wildanzr.my.id
+      JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
+      JUDGE_API_HOST: judge.wildanzr.my.id
+
+  submission1:
+    depends_on:
+      - mongodb
+      - rabbitmq
+    build:
+      context: ./be/submission
+      dockerfile: Dockerfile
+    image: letscode-submission:skripsi
+    container_name: letscode-submission2
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
+      JUDGE_API_HOST: judge.wildanzr.my.id
+
+  submission1:
+    depends_on:
+      - mongodb
+      - rabbitmq
+    build:
+      context: ./be/submission
+      dockerfile: Dockerfile
+    image: letscode-submission:skripsi
+    container_name: letscode-submission3
+    environment:
+      RABBITMQ_HOST: rabbitmq
+      RABBITMQ_PORT: 5672
+      RABBITMQ_USERNAME: guest
+      RABBITMQ_PASSWORD: guest
+      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
+      JUDGE_API_HOST: judge.wildanzr.my.id
 
   y-websocket:
     build:
@@ -145,24 +181,26 @@ services:
       COLLABORATION_URL: http://collaboration:6002
       PROBLEM_URL: http://problem:6003
 
-  web:
-    depends_on:
-      - gateway
-      - auth
-      - problem
-      - collaboration
-      - submission
-      - mailer
-      - y-websocket
-      - mongodb
-      - rabbitmq
-    build:
-      context: ./fe
-    image: letscode-web:skripsi
-    restart: always
-    container_name: letscode-web
-    ports:
-      - "3000:3000"
+  # web:
+  #   depends_on:
+  #     - gateway
+  #     - auth
+  #     - problem
+  #     - collaboration
+  #     - submission1
+  #     - submission2
+  #     - submission3
+  #     - mailer
+  #     - y-websocket
+  #     - mongodb
+  #     - rabbitmq
+  #   build:
+  #     context: ./fe
+  #   image: letscode-web:skripsi
+  #   restart: always
+  #   container_name: letscode-web
+  #   ports:
+  #     - "3000:3000"
 
 volumes:
   rabbitmq-data:
