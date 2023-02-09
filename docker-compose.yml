@@ -10,18 +10,18 @@ services:
     volumes:
       - rabbitmq-data:/var/lib/rabbitmq
 
-  mongodb:
-    image: mongo
-    container_name: letscode-mongodb
-    ports:
-      - 7017:27017
-    volumes:
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-      - letscode-mongodb:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: letscode
-      MONGO_INITDB_ROOT_USERNAME: mimin
-      MONGO_INITDB_ROOT_PASSWORD: 123456
+  # mongodb:
+  #   image: mongo
+  #   container_name: letscode-mongodb
+  #   ports:
+  #     - 7017:27017
+  #   volumes:
+  #     - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+  #     - letscode-mongodb:/data/db
+  #   environment:
+  #     MONGO_INITDB_DATABASE: letscode
+  #     MONGO_INITDB_ROOT_USERNAME: mimin
+  #     MONGO_INITDB_ROOT_PASSWORD: 123456
 
   auth:
     depends_on:
@@ -36,7 +36,7 @@ services:
       - "5001:6001"
     environment:
       PORT: 6001
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
@@ -59,7 +59,7 @@ services:
     environment:
       PORT: 6003
       SECRET: 4cf0628c7ce9c79fd4e38fe884a7f6c995440ee68394572ba342ba9f3368b07bcb0b45fd7ba6e9dcf4de8a62c5fbfcfa15f38e7bfbd0d6eeeae87206393164ca
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
     
   collaboration:
     depends_on:
@@ -74,7 +74,7 @@ services:
       - "5002:6002"
     environment:
       PORT: 6002
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
       RABBITMQ_HOST: rabbitmq
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
@@ -116,7 +116,7 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
       JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
       JUDGE_API_HOST: judge.wildanzr.my.id
 
@@ -134,7 +134,7 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
       JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
       JUDGE_API_HOST: judge.wildanzr.my.id
 
@@ -152,7 +152,7 @@ services:
       RABBITMQ_PORT: 5672
       RABBITMQ_USERNAME: guest
       RABBITMQ_PASSWORD: guest
-      DATABASE_URL: mongodb://mimin:123456@mongodb:27017/letscode?authSource=admin
+      DATABASE_URL: mongodb+srv://wildanzr:wildanzr123@letscode2gether.oex7vnj.mongodb.net/letscode
       JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
       JUDGE_API_HOST: judge.wildanzr.my.id
 
