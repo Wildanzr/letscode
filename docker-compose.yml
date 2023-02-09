@@ -120,7 +120,7 @@ services:
       JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
       JUDGE_API_HOST: judge.wildanzr.my.id
 
-  submission1:
+  submission2:
     depends_on:
       - mongodb
       - rabbitmq
@@ -138,7 +138,7 @@ services:
       JUDGE_API_URL: https://judge.wildanzr.my.id/submissions
       JUDGE_API_HOST: judge.wildanzr.my.id
 
-  submission1:
+  submission3:
     depends_on:
       - mongodb
       - rabbitmq
