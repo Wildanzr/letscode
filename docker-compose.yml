@@ -25,7 +25,7 @@ services:
 
   auth:
     depends_on:
-      - mongodb
+      # - mongodb
       - rabbitmq
     build:
       context: ./be/auth
@@ -47,8 +47,8 @@ services:
       PROJECT_ID: letscode-372615
 
   problem:
-    depends_on:
-      - mongodb
+    # depends_on:
+    #   - mongodb
     build:
       context: ./be/problem
       dockerfile: Dockerfile
@@ -63,7 +63,7 @@ services:
     
   collaboration:
     depends_on:
-      - mongodb
+      # - mongodb
       - rabbitmq
     build:
       context: ./be/collaboration
@@ -104,7 +104,7 @@ services:
 
   submission1:
     depends_on:
-      - mongodb
+      # - mongodb
       - rabbitmq
     build:
       context: ./be/submission
@@ -122,7 +122,7 @@ services:
 
   submission2:
     depends_on:
-      - mongodb
+      # - mongodb
       - rabbitmq
     build:
       context: ./be/submission
@@ -140,7 +140,7 @@ services:
 
   submission3:
     depends_on:
-      - mongodb
+      # - mongodb
       - rabbitmq
     build:
       context: ./be/submission
