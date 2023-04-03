@@ -34,6 +34,13 @@ services:
       RABBITMQ_PASSWORD: ${RABBITMQ_PASSWORD}
       SECRET: ${JWT_SECRET}
       CLIENT_HOST: ${CLIENT_HOST}
+      BACKEND_HOST: ${CLIENT_BACKEND_URL}
+      SUPER_EMAIL: ${SUPER_EMAIL}
+      SUPER_USERNAME: ${SUPER_USERNAME}
+      SUPER_PASSWORD: ${SUPER_PASSWORD}
+      SUPER_ID: ${SUPER_ID}
+    volumes:
+      - user-data:/usr/src/app/user-data
 
   collaboration:
     depends_on:
@@ -69,6 +76,7 @@ services:
       PORT: 6003
       SECRET: ${JWT_SECRET}
       DATABASE_URL: ${MONGODB_URL}
+      SUPER_ID: ${SUPER_ID}
 
   mailer:
     depends_on:
@@ -195,6 +203,7 @@ services:
 volumes:
   rabbitmq-data:
   letscode-mongodb:
+  user-data:
 
   # mongodb:
   #   image: mongo
