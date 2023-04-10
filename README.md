@@ -19,6 +19,12 @@ Try LetsCode here
 
 ## Installation
 
+<b>This installation guide is tested on Ubuntu 20.04. Please note that Judge0 is currently not working on Ubuntu 22.04. If you use another operating system, you may need to make some adjustments. Please read the official documentation for more information.
+- https://judge0.com/
+- https://github.com/judge0/judge0
+- https://docs.docker.com/engine/install/
+</b>
+
 To install LetsCode, make sure you have installed Docker on system. Docker is a platform for running and managing containers, which are lightweight and portable units that encapsulate an application and its dependencies.
 
 Once Docker is installed, follow these steps to install LetsCode:  
@@ -40,7 +46,12 @@ Once Docker is installed, follow these steps to install LetsCode:
     - Run the command `docker-compose build`. This will build all the Docker images defined in the `docker-compose.yml` file.
 
 4. Run the application with Docker Compose:
-    - In the terminal or command prompt, run the command `docker-compose up -d`. This will start the containers and run the application in detach mode.
+    - In the terminal or command prompt, run this command
+    ```
+    docker-compose up -d db redis rabbitmq
+    sleep 10
+    docker-compose up -d
+    ```
     - You can see the log of containers by executing the command `docker logs letscode-nameofimage`
 
 ## 🚀 Features

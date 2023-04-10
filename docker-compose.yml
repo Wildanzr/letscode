@@ -1,6 +1,58 @@
 version: "3.7"
-services:
 
+x-logging:
+  &default-logging
+  logging:
+    driver: json-file
+    options:
+      max-size: 100m
+
+services:
+# Judge0
+  server:
+    image: judge0/judge0:1.13.0
+    container_name: 'letscode-judge0'
+    volumes:
+      - ./judge0.conf:/judge0.conf:ro
+    ports:
+      - "2358:2358"
+    privileged: true
+    <<: *default-logging
+    restart: always
+
+  workers:
+    image: judge0/judge0:1.13.0
+    container_name: 'letscode-judge0-workers'
+    command: ["./scripts/workers"]
+    volumes:
+      - ./judge0.conf:/judge0.conf:ro
+    privileged: true
+    <<: *default-logging
+    restart: always
+
+  db:
+    image: postgres:13.0
+    container_name: 'letscode-judge0-db'
+    env_file: judge0.conf
+    volumes:
+      - postgres-data:/var/lib/postgresql/data/
+    <<: *default-logging
+    restart: always
+
+  redis:
+    image: redis:6.0
+    container_name: 'letscode-judge0-redis'
+    command: [
+      "bash", "-c",
+      'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
+    ]
+    env_file: judge0.conf
+    volumes:
+      - redis-data:/data
+    <<: *default-logging
+    restart: always
+
+# LetsCode
   rabbitmq:
     image: rabbitmq:3-management-alpine
     container_name: 'letscode-rabbitmq'
@@ -201,6 +253,8 @@ services:
       - "3000:3000"
 
 volumes:
+  postgres-data:
+  redis-data:
   rabbitmq-data:
   letscode-mongodb:
   user-data:
