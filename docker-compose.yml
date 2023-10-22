@@ -1,17 +1,16 @@
 version: "3.7"
 
-x-logging:
-  &default-logging
+x-logging: &default-logging
   logging:
     driver: json-file
     options:
       max-size: 100m
 
 services:
-# Judge0
+  # Judge0
   server:
     image: judge0/judge0:1.13.0
-    container_name: 'letscode-judge0'
+    container_name: "letscode-judge0"
     volumes:
       - ./judge0.conf:/judge0.conf:ro
     ports:
@@ -22,7 +21,7 @@ services:
 
   workers:
     image: judge0/judge0:1.13.0
-    container_name: 'letscode-judge0-workers'
+    container_name: "letscode-judge0-workers"
     command: ["./scripts/workers"]
     volumes:
       - ./judge0.conf:/judge0.conf:ro
@@ -32,7 +31,7 @@ services:
 
   db:
     image: postgres:13.0
-    container_name: 'letscode-judge0-db'
+    container_name: "letscode-judge0-db"
     env_file: judge0.conf
     volumes:
       - postgres-data:/var/lib/postgresql/data/
@@ -41,25 +40,27 @@ services:
 
   redis:
     image: redis:6.0
-    container_name: 'letscode-judge0-redis'
-    command: [
-      "bash", "-c",
-      'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"'
-    ]
+    container_name: "letscode-judge0-redis"
+    command:
+      [
+        "bash",
+        "-c",
+        'docker-entrypoint.sh --appendonly yes --requirepass "$$REDIS_PASSWORD"',
+      ]
     env_file: judge0.conf
     volumes:
       - redis-data:/data
     <<: *default-logging
     restart: always
 
-# LetsCode
+  # LetsCode
   rabbitmq:
     image: rabbitmq:3-management-alpine
-    container_name: 'letscode-rabbitmq'
+    container_name: "letscode-rabbitmq"
     restart: always
     ports:
-        - 5673:5672
-        - 15672:15672
+      - 5673:5672
+      - 15672:15672
     environment:
       - RABBITMQ_DEFAULT_USER=${RABBITMQ_USER}
       - RABBITMQ_DEFAULT_PASS=${RABBITMQ_PASSWORD}
@@ -232,25 +233,25 @@ services:
     environment:
       PORT: ${WEBSOCKET_PORT}
 
-  web:
-    depends_on:
-      - gateway
-      - auth
-      - problem
-      - collaboration
-      - submission1
-      - submission2
-      - submission3
-      - mailer
-      - y-websocket
-      - rabbitmq
-    build:
-      context: ./fe
-    image: letscode-web:skripsi
-    restart: always
-    container_name: letscode-web
-    ports:
-      - "3000:3000"
+  # web:
+  #   depends_on:
+  #     - gateway
+  #     - auth
+  #     - problem
+  #     - collaboration
+  #     - submission1
+  #     - submission2
+  #     - submission3
+  #     - mailer
+  #     - y-websocket
+  #     - rabbitmq
+  #   build:
+  #     context: ./fe
+  #   image: letscode-web:skripsi
+  #   restart: always
+  #   container_name: letscode-web
+  #   ports:
+  #     - "3000:3000"
 
 volumes:
   postgres-data:
